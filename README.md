@@ -17,12 +17,21 @@ database directly into [Karakeep](https://karakeep.app/) via its REST API.
 Article content is **not** migrated — Karakeep will re-crawl each URL when
 it processes the import queue.
 
+Written by Claude Code, and used by me to successfully migrate 554 real
+bookmarks from my own Wallabag instance to Karakeep.
+
 ## Requirements
 
-Python 3.11+ and two packages:
+Python 3.11+:
 
 ```bash
-pip install pymysql requests
+pip install -r requirements.txt
+```
+
+On Nix, skip the pip install entirely:
+
+```bash
+nix develop
 ```
 
 ## Setup
@@ -44,7 +53,9 @@ export KK_URL=http://localhost:3000
 export KK_API_KEY=your-karakeep-api-key
 ```
 
-Or pass everything as CLI arguments (see `--help`).
+Or pass everything as CLI arguments (see `--help`) - just know that CLI args
+are visible to anyone else on the box via `ps`, so env vars are the safer
+default on a shared or multi-user machine.
 
 ## Usage
 
@@ -70,3 +81,7 @@ python3 migrate.py --delay 0.5
   overwhelm the server during import.
 - Tag creation is idempotent — existing tags in Karakeep won't be duplicated.
 - If an entry fails to import it's logged and the script continues.
+
+## License
+
+[BSD 3-Clause](LICENSE)
